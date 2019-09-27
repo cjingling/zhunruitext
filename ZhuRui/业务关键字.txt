@@ -1,0 +1,53 @@
+*** Settings ***
+Resource          控件关键字.txt
+
+*** Keywords ***
+Login
+    [Arguments]    ${username}    ${password}
+    [Documentation]    登录模块
+    ...    username：用户名
+    ...    password：密码
+    ...    expect：预期结果
+    ...    reality：实际结果
+    open browser    http://10.4.1.141    firefox
+    Maximize Browser Window
+    sleep    2
+    Input Text    id=loginname    ${username}    #输入用户名
+    Input Text    id=loginpwd    ${password}    #输入密码
+    Sleep    1
+    Click Element    css=[type=submit]    \    #点击确认
+    Sleep    6
+
+点击功能树
+    sleep    1
+    Click Element    xpath=.//*[@id='treeNodes']/ul/li[1]/div/span[1]    # 点击市场主体准入
+    Click Element    xpath=.//*[@id='treeNodes']/ul/li[1]/ul/li[3]/div/span[2]    #点击登记业务
+    sleep    1
+    Click Element    xpath=.//*[@id='treeNodes']/ul/li[1]/ul/li[3]/ul/li[2]/div/span[2]    #点击登记业务
+    表单iframe    id=tab1
+
+功能树进入办理业务
+    [Arguments]    ${priname}    ${glyphicon}
+    [Documentation]    priname：主体名称
+    ...    glyphicon：业务
+    Input Text    css=[uib-tooltip=主体名称]    ${priname}    #输入主体名称
+    点击Button按钮    css=button[ng-click='vm.query()']    #点击查询
+    点击Button按钮    ${glyphicon}    #点击所办理业务
+    Unselect Frame
+    表单iframe    id=tab0
+
+我的待办进行办理业务
+    [Arguments]    ${entname}
+    [Documentation]    entname：主体名称
+    表单iframe    id=tab0
+    Input Text    css=input[ng-value='vm._condition.entname']    ${entname}    #输入主体名称
+    点击Button按钮    xpath=html/body/div[1]/form/div[3]/button[1]    #点击查询
+    点击Button按钮    xpath=html/body/div[1]/form/div[4]/div/table/tbody/tr[1]/td[11]/entry/a    #点击进入办理
+    sleep    3
+
+输入身份证查询
+    [Arguments]    ${cerno}
+    [Documentation]    cerno：身份证号码
+    Input Text    id=cerno    ${cerno}    #输入身份证号码
+    Click Element    css=button[ng-click='vm.cernoSearch()']    #点击查询
+    sleep    1

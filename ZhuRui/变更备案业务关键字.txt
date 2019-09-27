@@ -1,0 +1,15 @@
+*** Settings ***
+Resource          控件关键字.txt
+
+*** Keywords ***
+变更标签
+    Wait Until Page Contains Element    xpath=//div[@is-open='vm.changeIndex.isDomOpen']/div/h4/a/span/span    5    error
+    Press Keys    xpath=//div[@is-open='vm.changeIndex.isDomOpen']/div/h4/a/span/span    13
+    sleep    2
+    Press Keys    xpath=//div[@is-open='vm.changeIndex.isDomOpen']/div/h4/a/span/span    13
+    sleep    3
+
+备案标签
+    [Arguments]    ${beian}
+    [Documentation]    beian：备案项
+    点击Button按钮    ${beian}    #点击备案项

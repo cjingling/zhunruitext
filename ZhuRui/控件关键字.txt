@@ -1,0 +1,55 @@
+*** Keywords ***
+判断验证text
+    [Arguments]    ${expect}    ${reality}
+    [Documentation]    value：判断
+    ...    expect：预期结果
+    ...    reality：实际结果
+    ${expects}    Set Variable    ${expect}    #预期
+    ${realitys}    Get Text    ${reality}    #实际
+    Should Be Equal As Strings    ${realitys}    ${expects}
+
+表单iframe
+    [Arguments]    ${iframe}
+    [Documentation]    iframe：元素位置
+    Sleep    2
+    Select Frame    ${iframe}
+    Sleep    1
+
+关闭浏览器
+    close browser
+
+点击Button按钮
+    [Arguments]    ${button}
+    [Documentation]    button：元素位置
+    Sleep    1
+    Click Element    ${button}
+    Sleep    3
+
+判断验证value
+    [Arguments]    ${expect}    ${reality}
+    [Documentation]    value：判断
+    ...    expect：预期结果
+    ...    reality：实际结果
+    ${expects}    Set Variable    ${expect}    #预期
+    ${realitys}    Get Value    ${reality}    #实际
+    Should Be Equal As Strings    ${realitys}    ${expects}
+
+刷新页面
+    Unselect Frame
+    Sleep    1
+    Click Element    xpath=html/body/div[1]/div/div/div[2]/div[1]/ul/li[2]/a/uib-tab-heading/span[1]
+    Sleep    2
+    表单iframe    id=tab1
+
+下拉框选择select
+    [Arguments]    ${location}    ${value}
+    [Documentation]    location：下拉框元素位置
+    ...    value：元素的text
+    Select from List    ${location}    ${value}
+    sleep    2
+
+添加时间
+    [Arguments]    ${time}
+    [Documentation]    time：时间
+    Execute Javascript    window.document.getElementById("setdate").value='${time}'
+    sleep    2

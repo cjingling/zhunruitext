@@ -1,0 +1,38 @@
+*** Settings ***
+Resource          业务关键字.txt
+Resource          变更备案业务关键字.txt
+
+*** Keywords ***
+存续入口到申请信息页面
+    [Arguments]    ${username}    ${password}    ${priname}    ${glyphicon}    ${cerno}
+    [Documentation]    username：用户名
+    ...    password：密码
+    ...    priname：主体名称
+    ...    cerno：身份证号码
+    ...    glyphicon：业务
+    Login    ${username}    ${password}    #登录
+    点击功能树    #点击存续主体
+    功能树进入办理业务    ${priname}    ${glyphicon}    #点击业务
+    输入身份证查询    ${cerno}    #输入正确的身份证
+
+待办入口到申请信息页面
+    [Arguments]    ${username}    ${password}    ${entname}
+    [Documentation]    username：用户名
+    ...    password：密码
+    ...    entname：主体名称
+    Login    ${username}    ${password}    #登录
+    我的待办进行办理业务    ${entname}    #进入办理
+    点击Button按钮    xpath=html/body/div[1]/div[1]/ul/li[2]/a/uib-tab-heading    #点击申请信息页签
+    #Execute Javascript    js="var q=document.documentElement.scrollTop=10000"
+    #点击Button按钮    xpath=html/body/div[1]/div[2]/div/div/button[3]
+    Sleep    4
+
+存续：业务办理到申请信息
+    [Arguments]    ${expect}    ${beian}
+    [Documentation]    expect：实际业务类型
+    ...    beian：备案项
+    ${reality}    Get Text    xpath=html/body/div[1]/div[1]/ul/div/span
+    ${ret}=    Should Match Regexp    ${reality}    ${expect}    msg=匹配成功
+    run keyword if    '${ret}'=='备案登记'    备案标签    ${beian}
+    ...    ELSE    log    该业务无需判断
+    点击Button按钮    xpath=html/body/div[1]/div[1]/ul/li[2]/a/uib-tab-heading    #点击申请信息页签

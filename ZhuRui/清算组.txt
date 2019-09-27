@@ -1,0 +1,19 @@
+*** Settings ***
+Resource          业务关键字.txt
+
+*** Keywords ***
+添加清算组成员
+    Execute Javascript    js="var q=document.documentElement.scrollTop=10000"
+    Click Element    css=button[ng-click='vm.liqMemEdit()']    #点击添加清算组成员
+    表单iframe    css=[class=embed-responsive-item]
+    Click Element    name=name    #点击姓名
+    sleep    1
+    ${count}    get matching xpath count    xpath=html/body/div[1]/ng-form/div[2]/div[2]/ul/li    #获取人员数量
+    ${name}    evaluate    random.randint(1,${count})    random    #随机一个数值
+    Click Element    xpath=html/body/div[1]/ng-form/div[2]/div[2]/ul/li[${name}]/a    #点击随机后的人员
+    点击Button按钮    xpath=html/body/div[1]/ng-form/div[1]/div[4]/label[1]/input    #选择是负责人
+    Clear Element Text    css=input[rule='telephone']    #清空固定电话
+    点击Button按钮    css=button[ng-click='vm.memberSave()']    #点击保存
+    点击Button按钮    css=button[ng-click='vm.closeWin()']    #点击关闭
+    Unselect Frame
+    表单iframe    id=tab0

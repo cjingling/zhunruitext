@@ -1,0 +1,20 @@
+*** Settings ***
+Resource          业务关键字.txt
+
+*** Keywords ***
+添加主要人员
+    [Arguments]    ${cerno}    ${value}
+    [Documentation]    cerno：身份证号码
+    ...    value：职位
+    Execute Javascript    js="var q=document.documentElement.scrollTop=5000"
+    点击Button按钮    css=button[ng-click='vm.memberAdd()']    #点击添加
+    表单iframe    css=[class=embed-responsive-item]
+    输入身份证查询    ${cerno}
+    下拉框选择select    css=select[torch-dict='CB18']    ${value}    #选择主要人员的职位
+    点击Button按钮    css=button[ng-click='vm.memberSave()']    #点击保存
+    Unselect Frame
+    表单iframe    id=tab0
+
+删除主要人员
+    点击Button按钮    xpath=.//div/table/tbody/tr[1]/td[6]/button[2]
+    点击Button按钮    css=button[ng-click='ensure()']
