@@ -9,7 +9,7 @@ Login
     ...    password：密码
     ...    expect：预期结果
     ...    reality：实际结果
-    open browser    http://10.4.1.141    firefox
+    open browser    http://10.1.2.125    firefox
     Maximize Browser Window
     sleep    2
     Input Text    id=loginname    ${username}    #输入用户名
@@ -33,6 +33,10 @@ Login
     Input Text    css=[uib-tooltip=主体名称]    ${priname}    #输入主体名称
     点击Button按钮    css=button[ng-click='vm.query()']    #点击查询
     点击Button按钮    ${glyphicon}    #点击所办理业务
+    ${zhuxiao}    Get Text    xpath=html/body/div[1]/div/div/div[2]/p
+    ${ret}    Should Match Regexp    ${zhuxiao}    清算组备案    msg=匹配成功
+    run keyword if    '${ret}'=='清算组备案'    点击Button按钮    css=button[ng-click='ensure()']
+    ...    ELSE    log    该主体已办理清算组备案
     Unselect Frame
     表单iframe    id=tab0
 
@@ -49,5 +53,6 @@ Login
     [Arguments]    ${cerno}
     [Documentation]    cerno：身份证号码
     Input Text    id=cerno    ${cerno}    #输入身份证号码
+    sleep    1
     Click Element    css=button[ng-click='vm.cernoSearch()']    #点击查询
     sleep    1

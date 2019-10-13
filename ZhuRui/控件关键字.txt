@@ -45,7 +45,7 @@
     [Arguments]    ${location}    ${value}
     [Documentation]    location：下拉框元素位置
     ...    value：元素的text
-    Select from List    ${location}    ${value}
+    Select From List By Value    ${location}    ${value}
     sleep    2
 
 添加时间

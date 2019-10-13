@@ -3,7 +3,7 @@ Library           Selenium2Library
 Resource          ../流程关键字.txt
 Resource          ../业务关键字.txt
 Resource          ../主要人员界面.txt
-Resource          ../清算组.txt
+Resource          ../清算组与注销.txt
 
 *** Test Cases ***
 Cunxurunshengban

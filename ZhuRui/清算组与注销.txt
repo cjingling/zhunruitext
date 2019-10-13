@@ -1,5 +1,6 @@
 *** Settings ***
 Resource          业务关键字.txt
+Library           AutoItLibrary
 
 *** Keywords ***
 添加清算组成员
@@ -17,3 +18,14 @@ Resource          业务关键字.txt
     点击Button按钮    css=button[ng-click='vm.closeWin()']    #点击关闭
     Unselect Frame
     表单iframe    id=tab0
+
+填写注销信息
+    [Arguments]    ${time}
+    [Documentation]    time：公告日期
+    send    {DOWN 5}
+    sleep    1
+    下拉框选择select    css=select[ng-model='vm.cancelForm.canrea']    30    #选择注销原因
+    Click Element    css=input[name='f'][value='2']    #选择公告方式
+    Double Click Element    css=input[ng-change='change(date)']
+    Input Text    css=input[ng-change='change(date)']    ${time}    #输入公告日期
+    点击Button按钮    xpath=html/body/div[1]/div[1]/ul/li[2]/a/uib-tab-heading/span    #点击受理意见页签
